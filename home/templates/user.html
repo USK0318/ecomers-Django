@@ -1,0 +1,33 @@
+{% extends 'home.html' %}
+{% block main %}
+<div class="profile-container">
+    
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-image">
+            <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="User Profile" class="profile-img">
+        </div>
+        <div class="profile-info">
+            <h2>{{i.username}}</h2>
+            <p>{{i.email}}</p>
+            <p>Member since: January 2024</p>
+        </div>
+    </div>
+
+    <!-- Profile Details -->
+    
+    <div class="profile-details">
+        <h3>Account Information</h3>
+        <p><strong>Name:</strong> {{i.first_name}} {{i.last_name}}</p>
+        <p><strong>Phone:</strong> None</p>
+        <p><strong>Address:</strong> Nome</p>
+    </div>
+
+    <!-- Profile Settings -->
+    <div class="profile-settings">
+        <h3>Settings</h3>
+        <a href="#" class="btn-primary">Edit Profile</a>
+        <a href="#" class="btn-secondary">Change Password</a>
+    </div>
+</div>
+{% endblock %}
