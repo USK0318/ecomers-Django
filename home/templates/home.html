@@ -464,19 +464,19 @@
         <div class="banner-content inactive">
             Festival Discounts: Shop now and save big! <!-- Banner content -->
         </div>
+        <div class="banner-content inactive">
+            Limited Time Offer: Buy 1 Get 1 Free! <!-- Banner content -->
+        </div>
+
     </div>
     {% block main %}
     
     <!-- Main content -->
     <div class="container">
-        <h3>Welcome to MY-E shoP</h3>
-        <p>Your one-stop destination for all your shopping needs.</p>
-
         <!-- Featured products section -->
         <section class="featured-products">
             <h2>Featured Products</h2>
             <div class="row">
-
                 <!-- Product card 1 -->
                 {% for product in data %}
                 <div class="col-sm-4">
@@ -492,8 +492,6 @@
                       </div>
                     </div>
                 {% endfor %}
-
-                
             </div>
         </section>
         

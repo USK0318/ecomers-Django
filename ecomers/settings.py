@@ -77,13 +77,13 @@ WSGI_APPLICATION = 'ecomers.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-    'ENGINE': 'django.db.backends.mysql',
-    'NAME':'ecommerce',
-    'USER':'root',
-    'PASSWORD':'bangtan07',
-    'HOST':'localhost',
-    'PORT':3306
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME':'ecomers',
+'USER':'root',
+'PASSWORD':'20A25B0318',
+'HOST':'localhost',
+'PORT':3306
 }
 }
 
