@@ -108,10 +108,13 @@ def cart(request):
 @login_required(login_url='login')
 def user(request):
     a=User.objects.get(id=request.user.id)
-    b=user_info.objects.get(user_id=request.user.id)
-    data = {'id':a,'email':a.email,'first_name':a.first_name,'last_name':a.last_name}
+    try:
+        b=user_info.objects.get(user_id=request.user.id)
+        data = {'id':a,'email':a.email,'first_name':a.first_name,'last_name':a.last_name}
+        return render(request, 'user.html',{'i':data,'j':b})
+    except:
+        return render(request, 'user.html',{'i':a})
 
-    return render(request, 'user.html',{'i':data,'j':b})
 
 @login_required(login_url='login')
 def upload(request):
