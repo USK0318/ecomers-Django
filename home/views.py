@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import productform,registerform,editform
+from .models import user_info
 from django.contrib import messages
 from .models import Product
 from django.contrib.auth.models import User
@@ -132,9 +133,7 @@ def edit(request):
     if request.method == 'POST':
         form = editform(request.POST, request.FILES)
         if form.is_valid():
-            # Commit=False to get the instance without saving to the database yet
             instance = form.save(commit=False)
-            # Assigning the current user's ID to the user_id field of the instance
             instance.user_id = request.user.id
             instance.save()
             return redirect('user')
@@ -144,4 +143,4 @@ def edit(request):
     else:
         form = editform()
         return render(request, 'edit.html', {'form': form})
-
+   
