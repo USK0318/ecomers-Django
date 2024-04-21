@@ -5,28 +5,29 @@
     <!-- Profile Header -->
     <div class="profile-header">
         <div class="profile-image">
-            <img src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg" alt="User Profile" class="profile-img">
+            <img src="{{j.profile_pic.url}}" alt="User Profile" class="profile-img">
         </div>
         <div class="profile-info">
             <h2>{{i.username}}</h2>
             <p>{{i.email}}</p>
-            <p>Member since: January 2024</p>
+            <p><strong>Date of Barth:</strong> {{j.date_of_birth}}</p>
         </div>
     </div>
 
     <!-- Profile Details -->
     
     <div class="profile-details">
-        <h3>Account Information</h3>
+        <h3><strong>Account Information</strong></h3>
         <p><strong>Name:</strong> {{i.first_name}} {{i.last_name}}</p>
-        <p><strong>Phone:</strong> None</p>
-        <p><strong>Address:</strong> Nome</p>
+        <p><strong>Phone:</strong> {{j.user_mobile}}</p>
+        <p><strong>Gender: </strong>{{j.gender}}</p>
+        <p><strong>Address:</strong> {{j.address}}</p>
     </div>
 
     <!-- Profile Settings -->
     <div class="profile-settings">
-        <h3>Settings</h3>
-        <a href="#" class="btn-primary">Edit Profile</a>
+        <h3><strong>Settings</strong></h3>
+        <a href="/edit" class="btn-primary">Edit Profile</a>
         <a href="#" class="btn-secondary">Change Password</a>
     </div>
 </div>

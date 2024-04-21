@@ -14,3 +14,13 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+class user_info(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    user_mobile = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+    address = models.CharField(max_length=50)
+    gender = models.CharField(max_length=50)
+    profile_pic = models.ImageField(upload_to="profile_pics")
+    
+    def __str__(self):
+        return self.user_name
