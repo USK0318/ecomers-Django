@@ -14,7 +14,59 @@
         /* General styles */
         body {
             font-size: 18px;
+            font-family: Arial, sans-serif;
         }
+        .banner {
+            width: 100%;
+            height: 200px;
+            background-image: url('https://i.pinimg.com/736x/89/70/43/8970437c3e3df27cb040130e133dc6a4.jpg'); /* Add your image URL here */
+            background-size: cover; /* Cover the entire area */
+            background-position: center; /* Center the image */
+            color: white;
+            text-align: center;
+            line-height: 200px; /* Centering text vertically */
+            font-size: 36px; 
+            position: relative;
+            overflow: hidden; /* Hide overflowing content */
+        }
+
+
+        .banner-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s ease-in-out; /* Add smooth transition */
+        }
+
+        .banner-content.active {
+            transform: translateX(0); /* Slide in from left */
+        }
+
+        .banner-content.inactive {
+            transform: translateX(100%); /* Slide out to right */
+        }
+        .navbar {
+            background-color: #222; /* Background color for the navigation */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-brand {
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+            font-family: Arial, sans-serif; 
+        }
+
 
         /* Navigation bar styles */
         .navbar-brand {
@@ -405,6 +457,14 @@
             </div>
         </div>
     </nav>
+    <div class="banner">
+        <div class="banner-content active">
+            Today's Offers: Get 20% off on all products! <!-- Banner content -->
+        </div>
+        <div class="banner-content inactive">
+            Festival Discounts: Shop now and save big! <!-- Banner content -->
+        </div>
+    </div>
     {% block main %}
     
     <!-- Main content -->
@@ -451,7 +511,23 @@
             <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
         </div>
     </footer>
+    <script>
+        // JavaScript to toggle banner content
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get banner elements
+            const bannerContents = document.querySelectorAll('.banner-content');
 
+            // Toggle banner content
+            let activeIndex = 0;
+            setInterval(function () {
+                bannerContents[activeIndex].classList.remove('active');
+                bannerContents[activeIndex].classList.add('inactive');
+                activeIndex = (activeIndex + 1) % bannerContents.length;
+                bannerContents[activeIndex].classList.remove('inactive');
+                bannerContents[activeIndex].classList.add('active');
+            }, 5000); // Change content every 5 seconds
+        });
+    </script>
 </body>
 
 </html>
