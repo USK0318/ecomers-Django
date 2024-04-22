@@ -34,5 +34,29 @@
             <li>Community: We give back and support our community.</li>
         </ul>
     </div>
+    <div class="container">
+        <!-- Featured products section -->
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="row">
+                <!-- Product card 1 -->
+                {% for product in data %}
+                <div class="col-sm-4">
+                    <div class="product-card card">
+                        <img src={{product.image.url}} class="card-img-top img-responsive" alt="Product 3">
+                            <div class="card-body">
+                            <h class="card-title1">{{ product.product_name }}</h><br>
+                            <h class="card-title">₹ {{ product.price }}</h>
+                            <p class="card-text">{{ product.desc }}</p>
+                            <a href="" class="add-to-cart-button">Add to Cart</a>
+                            <a href="#" class="buy-button">Buy Now</a>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        
+    </div>
 </div>
 {%endblock%}

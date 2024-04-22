@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import productform,registerform,editform
-from .models import user_info
+from .models import user_info,Product,cart
 from django.contrib import messages
 from .models import Product
 from django.contrib.auth.models import User
@@ -23,11 +23,13 @@ def home(request):
 
 @login_required(login_url='login')
 def shop(request):
-    return render(request, 'shop.html')
+    a=Product.objects.all()
+    return render(request, 'shop.html',{'data':a})
 
 @login_required(login_url='login')
 def about(request):
-    return render(request, 'about.html')    
+    a=Product.objects.all()
+    return render(request, 'about.html', {'data':a})    
 
 @login_required(login_url='login')
 def contact(request):
@@ -103,6 +105,7 @@ def logout_fun(request):
 
 @login_required(login_url='login')
 def cart(request):
+    
     return render(request, 'cart.html')
 
 @login_required(login_url='login')
@@ -147,3 +150,8 @@ def edit(request):
         form = editform()
         return render(request, 'edit.html', {'form': form})
    
+def add_to_cart(request,id):
+    product=Product.objects.get(product_id=id)
+    cart(user_id=request.user.id,product_id=product.product_id).save()
+    redirect('cart')
+    

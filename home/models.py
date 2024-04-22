@@ -21,6 +21,23 @@ class user_info(models.Model):
     address = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
     profile_pic = models.ImageField(upload_to="profile_pics")
-    
+
     def __str__(self):
         return self.user_name
+class cart(models.Model):
+    cart_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(user_info, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_id
+
+class order(models.Model):
+    order_id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey(user_info, on_delete=models.CASCADE)
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    price = models.IntegerField(default=0)
+    date = models.DateField()
+
+    def __str__(self):
+        return self.user_id
