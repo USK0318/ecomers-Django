@@ -11,6 +11,7 @@
             <h2>{{ i.username }}</h2>
             <p>{{ i.email }}</p>
             <p><strong>Date of Birth:</strong> {{ j.date_of_birth }}</p>
+            
         </div>
     </div>
 
@@ -28,11 +29,44 @@
     <div class="profile-settings">
         <h3><strong>Settings</strong></h3>
         <ul class="settings-menu">
-            <li><a style="color: black; text-decoration: none; margin-top: 10px; font-size: 15px;" href="/edit">Edit Profile</a></li>
-            <li><a style="color: black; text-decoration: none; margin-top: 10px; font-size: 15px;" href="#">Change Password</a></li>
-            <li><a style="color: black; text-decoration: none; margin-top: 10px; font-size: 15px;" href="/logout">Logout</a></li>
+            <li><a class="settings-link" href="/order">My Orders</a></li>
+            <li><a class="settings-link" href="/edit">Edit Profile</a></li>
+            <li><a class="settings-link" href="#">Change Password</a></li>
+            <li><a class="settings-link" href="/logout">Logout</a></li>
+            {% if request.user.is_staff %}
+                <li class="admin-dropdown">
+                    <a class="settings-link" href="">Admin Panel</a>
+                    <ul class="sub-menu">
+                        <li><a class="settings-link" href="/upload">Upload Product</a></li>
+                        <li><a class="settings-link" href="/view">View Products</a></li>
+                        <li><a class="settings-link" href="/DashBoards">DashBoards</a></li>
+                    </ul>
+                </li>
+            {% endif %}
+
+         
             <!-- Add more list items for additional settings options -->
         </ul>
+        
+        <style>
+            .admin-dropdown:hover .sub-menu {
+                display: block;
+            }
+            
+            .sub-menu {
+                display: none;
+                position: absolute;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 10px;
+                z-index: 1;
+            }
+            
+            .sub-menu li {
+                margin-bottom: 5px;
+            }
+        </style>
+        
     </div>
 </div>
 {% endblock %}

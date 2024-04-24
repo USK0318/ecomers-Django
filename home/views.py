@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import productform,registerform,editform
-from .models import user_info,Product,cart
+from .models import user_info,Product,cart,order
 from django.contrib import messages
 from .models import Product
 from django.contrib.auth.models import User
@@ -13,7 +13,12 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.shortcuts import render
+from django.db.models import Q
+from .models import Product, cart
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from .models import order
 
 # Create your views here.
 @login_required(login_url='login')
@@ -29,6 +34,7 @@ def shop(request):
 @login_required(login_url='login')
 def about(request):
     a=Product.objects.all()
+    print(a)
     return render(request, 'about.html', {'data':a})    
 
 @login_required(login_url='login')
@@ -82,8 +88,6 @@ def login_fun(request):
             return redirect('home')
     return render(request,'login.html')
 
-    
-
 def register(request):
     a=registerform()
     if request.method=='POST':
@@ -102,18 +106,12 @@ def logout_fun(request):
     logout(request)
     return redirect('login')
 
-
-@login_required(login_url='login')
-def cart(request):
-    
-    return render(request, 'cart.html')
-
 @login_required(login_url='login')
 def user(request):
     a=User.objects.get(id=request.user.id)
     try:
         b=user_info.objects.get(user_id=request.user.id)
-        data = {'id':a,'email':a.email,'first_name':a.first_name,'last_name':a.last_name}
+        data = {'id':a,'email':a.email,'first_name':a.first_name,'last_name':a.last_name ,'is_staf':a.is_staff}
         return render(request, 'user.html',{'i':data,'j':b})
     except:
         return render(request, 'user.html',{'i':a})
@@ -149,9 +147,49 @@ def edit(request):
     else:
         form = editform()
         return render(request, 'edit.html', {'form': form})
-   
-def add_to_cart(request,id):
-    product=Product.objects.get(product_id=id)
-    cart(user_id=request.user.id,product_id=product.product_id).save()
-    redirect('cart')
-    
+
+@login_required(login_url='login')
+def addtocart(request, ids):
+    cart.objects.create(user_id=request.user.id, product_id=ids)
+    return redirect('shop')
+
+@login_required(login_url='login')
+def addorder(request, ids):
+    a=Product.objects.get(product_id=ids)
+    order.objects.create(user_id=request.user.id, product_id=ids,price=a.price)
+    return redirect('shop')
+
+@login_required(login_url='login')
+def deletecart(request, ids):
+    cart.objects.filter(product_id=ids).delete()
+    return redirect('cart')
+
+@login_required(login_url='login')
+def cart_info(request):
+    items=[]
+    user_cart = cart.objects.filter(user_id=request.user.id)
+    for i in user_cart:
+        items.append(i.product_id)
+
+    all_products = Product.objects.all()
+    products_in_cart = all_products.filter(product_id__in=items)
+    return render(request, 'cart.html', {'data': products_in_cart})
+
+from .models import order
+
+@login_required(login_url='login')
+def order_info(request):
+    items = []
+    user_orders = order.objects.filter(user_id=request.user.id)
+    for i in user_orders:
+        items.append(i.product_id)
+
+    all_products = Product.objects.all()
+    products_in_order = all_products.filter(product_id__in=items)
+    return render(request, 'order.html', {'data': products_in_order})
+
+
+@login_required(login_url='login')
+def deleteorder(request, ids):
+    order.objects.filter(product_id=ids).delete()
+    return redirect('order')

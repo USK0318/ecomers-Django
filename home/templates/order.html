@@ -15,8 +15,8 @@
                             <h class="card-title1">{{ product.product_name }}</h><br>
                             <h class="card-title">₹ {{ product.price }}</h>
                             <p class="card-text">{{ product.desc }}</p>
-                            <a href="{% url 'addtocart' product.product_id %}" class="add-to-cart-button">Add to Cart</a>
-                            <a href="{% url 'addorder' product.product_id %}" class="buy-button">Buy Now</a>
+                            <a href="{% url 'removeorder' product.product_id %}" style="background:red;" class="add-to-cart-button">Remove</a>
+                            <a href="#" class="buy-button">Buy Again</a>
                         </div>
                       </div>
                     </div>

@@ -26,18 +26,17 @@ class user_info(models.Model):
         return self.user_name
 class cart(models.Model):
     cart_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(user_info, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user_id = models.IntegerField()
+    product_id = models.IntegerField()
 
     def __str__(self):
         return self.user_id
 
 class order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(user_info, on_delete=models.CASCADE)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user_id = models.IntegerField()
+    product_id = models.IntegerField()
     price = models.IntegerField(default=0)
-    date = models.DateField()
 
     def __str__(self):
         return self.user_id
