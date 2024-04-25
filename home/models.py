@@ -3,16 +3,19 @@ from django.contrib.auth.models import AbstractUser
 
 
 
-# Create your models here.
+from django.db import models
+
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
     desc = models.CharField(max_length=300)
     image = models.ImageField(upload_to="product_images")
+    user_id = models.IntegerField(default=0)  # You can provide a default value or make it nullable by removing the default value
 
     def __str__(self):
         return self.product_name
+
 
 class user_info(models.Model):
     user_id = models.AutoField(primary_key=True)

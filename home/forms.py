@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class productform(forms.ModelForm):
     class Meta:
         model=Product
-        fields='__all__'
+        fields=['product_name','price','desc','image']
 
 class registerform(UserCreationForm):
     class Meta:

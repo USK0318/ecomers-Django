@@ -31,21 +31,19 @@
         <ul class="settings-menu">
             <li><a class="settings-link" href="/order">My Orders</a></li>
             <li><a class="settings-link" href="/edit">Edit Profile</a></li>
-            <li><a class="settings-link" href="#">Change Password</a></li>
+            <li><a class="settings-link" href="" onclick="find()" >Change Password</a></li>
             <li><a class="settings-link" href="/logout">Logout</a></li>
             {% if request.user.is_staff %}
                 <li class="admin-dropdown">
                     <a class="settings-link" href="">Admin Panel</a>
                     <ul class="sub-menu">
                         <li><a class="settings-link" href="/upload">Upload Product</a></li>
-                        <li><a class="settings-link" href="/view">View Products</a></li>
+                        <li><a class="settings-link" href="/viewpro">View Products</a></li>
                         <li><a class="settings-link" href="/DashBoards">DashBoards</a></li>
                     </ul>
                 </li>
             {% endif %}
 
-         
-            <!-- Add more list items for additional settings options -->
         </ul>
         
         <style>
@@ -66,6 +64,14 @@
                 margin-bottom: 5px;
             }
         </style>
+        <script>
+            function find() {
+                alert("Please contact the admin to change your password");
+            }
+
+
+        </script>
+
         
     </div>
 </div>

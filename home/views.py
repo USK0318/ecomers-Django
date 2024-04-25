@@ -19,6 +19,7 @@ from .models import Product, cart
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from .models import order
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 @login_required(login_url='login')
@@ -116,14 +117,16 @@ def user(request):
     except:
         return render(request, 'user.html',{'i':a})
 
-
+@user_passes_test(lambda u: u.is_staff)
 @login_required(login_url='login')
 def upload(request):
     a=productform()
     if request.method=="POST":
         b=productform(request.POST,request.FILES)
         if b.is_valid()==True:
-            b.save()
+            x=b.save( commit=False)
+            x.user_id=request.user.id
+            x.save()
             messages.success(request,'Data saved')
             return render(request,'form.html',{'form':a})
         else:
@@ -177,6 +180,7 @@ def cart_info(request):
 
 from .models import order
 
+
 @login_required(login_url='login')
 def order_info(request):
     items = []
@@ -193,3 +197,64 @@ def order_info(request):
 def deleteorder(request, ids):
     order.objects.filter(product_id=ids).delete()
     return redirect('order')
+
+@user_passes_test(lambda u: u.is_staff)
+@login_required(login_url='login')
+def viewpro(request):
+    a=Product.objects.filter(user_id=request.user.id)
+    return render(request, 'viewpro.html', {'data': a})
+
+@user_passes_test(lambda u: u.is_staff)
+@login_required(login_url='login')
+def dashboard(request):
+    a=Product.objects.filter(user_id=request.user.id)
+    product_count = a.count()
+    c=0
+    for i in a:
+        c=c+i.price
+    return render(request, 'dashboard.html', {'product_count': product_count, 'total_price': c,'username':request.user.username})
+
+from django.core.files.storage import default_storage
+
+@user_passes_test(lambda u: u.is_staff)
+@login_required(login_url='login')
+def deletepro(request, ids):
+    try:
+        product = Product.objects.get(product_id=ids)
+    except Product.DoesNotExist:
+        # Handle case where product doesn't exist
+        return HttpResponse("Product not found.", status=404)
+
+    # Get the image associated with the product and delete it from storage
+    if product.image:
+        image_path = product.image.path
+        default_storage.delete(image_path)
+
+    # Delete the product instance
+    product.delete()
+
+    return redirect('viewpro')
+
+
+@user_passes_test(lambda u: u.is_staff)
+@login_required(login_url='login')
+def editpro(request, ids):
+    # Get the product instance you want to edit
+    product_instance = get_object_or_404(Product, product_id=ids)
+    
+    if request.method == 'POST':
+        # Pass instance to form to create a bounded form
+        form = productform(request.POST, request.FILES, instance=product_instance)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user_id = request.user.id
+            instance.product_id = ids
+            instance.save()
+            return redirect('viewpro')
+        else:
+            messages.error(request, 'Data not Saved')
+            return render(request, 'form.html', {'form': form})
+    else:
+        # Pass instance to form to create a bounded form
+        form = productform(instance=product_instance)
+        return render(request, 'form.html', {'form': form})

@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'ecomers.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
-'NAME':'ecomers',
+'NAME':'Ecomere',
 'USER':'root',
 'PASSWORD':'20A25B0318',
 'HOST':'localhost',
